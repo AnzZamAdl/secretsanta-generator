@@ -41,7 +41,7 @@ pipeline {
         stage('Docker Build & Push'){
             steps{
                 script{
-                    withDockerRegistry(credentialsId: 'b7905b67-2cb1-49af-814f-3f6db48ebc0d', toolName: 'docker') {
+                    withDockerRegistry(credentialsId: 'docker-login', toolName: 'docker') {
                         sh '''
                             docker build -t santa .
                             docker tag santa anzzamadl/santa:latest
@@ -57,7 +57,7 @@ pipeline {
                 script{
 		            sh 'docker stop santa2 || true'
                     sh 'docker rm santa2 || true'
-                    withDockerRegistry(credentialsId: 'b7905b67-2cb1-49af-814f-3f6db48ebc0d', toolName: 'docker') {
+                    withDockerRegistry(credentialsId: 'docker-login', toolName: 'docker') {
                         sh '''
                             docker run -d --name santa2 -p 8081:8081 anzzamadl/santa:latest
                         '''
